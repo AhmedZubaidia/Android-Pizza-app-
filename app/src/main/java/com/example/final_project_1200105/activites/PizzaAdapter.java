@@ -1,26 +1,33 @@
 package com.example.final_project_1200105.activites;
 
-import android.app.AlertDialog;
 import android.content.Context;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.final_project_1200105.R;
+import com.example.final_project_1200105.ui.gallery.OrderMenuFragment;
+import com.example.final_project_1200105.ui.gallery.PizzaDetailsFragment;
 
 import java.util.List;
 
 public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHolder> {
     private List<Pizza> pizzaList;
     private Context context;
+    private FragmentManager fragmentManager;
+    private int fragmentContainerId;
 
-    public PizzaAdapter(List<Pizza> pizzaList, Context context) {
+    public PizzaAdapter(List<Pizza> pizzaList, Context context, FragmentManager fragmentManager, int fragmentContainerId) {
         this.pizzaList = pizzaList;
         this.context = context;
+        this.fragmentManager = fragmentManager;
+        this.fragmentContainerId = fragmentContainerId;
     }
 
     @Override
@@ -70,15 +77,11 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     }
 
     private void showPizzaDetails(Pizza pizza) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.pizza_details_dialog, null);
-        ((TextView) view.findViewById(R.id.pizza_name)).setText(pizza.getName());
-        ((TextView) view.findViewById(R.id.pizza_description)).setText(pizza.getDescription());
-        ((TextView) view.findViewById(R.id.pizza_price)).setText(String.valueOf(pizza.getPrice()));
-
-        builder.setView(view)
-                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        PizzaDetailsFragment pizzaDetailsFragment = PizzaDetailsFragment.newInstance(pizza);
+        fragmentManager.beginTransaction()
+                .replace(fragmentContainerId, pizzaDetailsFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void addToFavorites(Pizza pizza) {
@@ -86,19 +89,10 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     }
 
     private void showOrderMenu(Pizza pizza) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        View view = LayoutInflater.from(context).inflate(R.layout.order_menu_dialog, null);
-        ((TextView) view.findViewById(R.id.pizza_name)).setText(pizza.getName());
-        ((TextView) view.findViewById(R.id.pizza_price)).setText(String.valueOf(pizza.getPrice()));
-
-        // Setup size and quantity input fields and handle order submission
-
-        builder.setView(view)
-                .setPositiveButton("Submit", (dialog, id) -> {
-                    // Implement order submission logic
-                    dialog.dismiss();
-                })
-                .setNegativeButton("Cancel", (dialog, id) -> dialog.dismiss());
-        builder.create().show();
+        OrderMenuFragment orderMenuFragment = OrderMenuFragment.newInstance(pizza);
+        fragmentManager.beginTransaction()
+                .replace(fragmentContainerId, orderMenuFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

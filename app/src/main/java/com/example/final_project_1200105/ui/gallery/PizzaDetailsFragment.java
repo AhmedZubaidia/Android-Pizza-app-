@@ -24,7 +24,7 @@ public class PizzaDetailsFragment extends Fragment {
     public static PizzaDetailsFragment newInstance(Pizza pizza) {
         PizzaDetailsFragment fragment = new PizzaDetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PIZZA, (Serializable) pizza);
+        args.putSerializable(ARG_PIZZA, pizza);
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,9 +39,11 @@ public class PizzaDetailsFragment extends Fragment {
             pizza = (Pizza) getArguments().getSerializable(ARG_PIZZA);
         }
 
-        ((TextView) view.findViewById(R.id.pizza_name)).setText(pizza.getName());
-        ((TextView) view.findViewById(R.id.pizza_description)).setText(pizza.getDescription());
-        ((TextView) view.findViewById(R.id.pizza_price)).setText(String.valueOf(pizza.getPrice()));
+        if (pizza != null) {
+            ((TextView) view.findViewById(R.id.pizza_name)).setText(pizza.getName());
+            ((TextView) view.findViewById(R.id.pizza_description)).setText(pizza.getDescription());
+            ((TextView) view.findViewById(R.id.pizza_price)).setText(String.valueOf(pizza.getPrice()));
+        }
 
         return view;
     }

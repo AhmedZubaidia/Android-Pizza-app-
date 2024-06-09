@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
@@ -14,13 +13,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginTop="16dp" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView2"
-        android:name="com.example.final_project_1200105.ui.gallery.PizzaDetailsFragment"
+        android:id="@+id/fragmentContainerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
 </LinearLayout>

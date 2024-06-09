@@ -38,7 +38,7 @@ public class PizzaMenuFragment extends Fragment {
 
         searchView = view.findViewById(R.id.searchView);
         pizzaList = new ArrayList<>();
-        pizzaAdapter = new PizzaAdapter(pizzaList, getContext());
+        pizzaAdapter = new PizzaAdapter(pizzaList, getContext(), getChildFragmentManager(), R.id.fragmentContainerView);
         recyclerView.setAdapter(pizzaAdapter);
 
         // Load mock pizza types
