@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,14 +17,12 @@ import com.example.final_project_1200105.activites.PizzaAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PizzaMenuFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private PizzaAdapter pizzaAdapter;
     private List<Pizza> pizzaList;
-    private SearchView searchView;
 
     @Nullable
     @Override
@@ -36,27 +33,12 @@ public class PizzaMenuFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        searchView = view.findViewById(R.id.searchView);
         pizzaList = new ArrayList<>();
-        pizzaAdapter = new PizzaAdapter(pizzaList, getContext(), getChildFragmentManager(), R.id.fragmentContainerView);
+        pizzaAdapter = new PizzaAdapter(pizzaList, getContext());
         recyclerView.setAdapter(pizzaAdapter);
 
         // Load mock pizza types
         loadMockPizzaTypes();
-
-        // Set up search functionality
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterPizzas(newText);
-                return false;
-            }
-        });
 
         return view;
     }
@@ -77,15 +59,5 @@ public class PizzaMenuFragment extends Fragment {
         pizzaList.add(new Pizza("Pesto Chicken Pizza", "Savory Pesto chicken pizza with sun-dried tomatoes", 20.99, "Large", "Chicken"));
 
         pizzaAdapter.notifyDataSetChanged();
-    }
-
-    private void filterPizzas(String query) {
-        List<Pizza> filteredList = pizzaList.stream()
-                .filter(pizza -> pizza.getName().toLowerCase().contains(query.toLowerCase()) ||
-                        String.valueOf(pizza.getPrice()).contains(query) ||
-                        pizza.getSize().toLowerCase().contains(query.toLowerCase()) ||
-                        pizza.getCategory().toLowerCase().contains(query.toLowerCase()))
-                .collect(Collectors.toList());
-        pizzaAdapter.updateList(filteredList);
     }
 }

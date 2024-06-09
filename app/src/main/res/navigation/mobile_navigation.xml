@@ -15,17 +15,28 @@
         android:id="@+id/nav_Menu"
         android:name="com.example.final_project_1200105.ui.gallery.PizzaMenuFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/menu_fragment" />
+        tools:layout="@layout/menu_fragment">
+        <action
+            android:id="@+id/action_nav_Menu_to_pizzaDetailsFragment"
+            app:destination="@id/pizzaDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_favourite"
         android:name="com.example.final_project_1200105.ui.slideshow.FavouriteFragment"
         android:label="@string/Favourite"
         tools:layout="@layout/favourite_fragment" />
+
     <fragment
         android:id="@+id/nav_my_orders"
         android:name="com.example.final_project_1200105.activites.MyOrdersFragment"
         android:label="@string/my_orders"
         tools:layout="@layout/fragment_my_orders" />
+
+    <fragment
+        android:id="@+id/pizzaDetailsFragment"
+        android:name="com.example.final_project_1200105.ui.gallery.PizzaDetailsFragment"
+        android:label="Pizza Details"
+        tools:layout="@layout/fragment_pizza_details" />
 
 </navigation>

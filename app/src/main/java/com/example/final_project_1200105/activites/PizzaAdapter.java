@@ -2,9 +2,10 @@ package com.example.final_project_1200105.activites;
 
 import android.content.Context;
 
-import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.ui.gallery.OrderMenuFragment;
 import com.example.final_project_1200105.ui.gallery.PizzaDetailsFragment;
 
 import java.util.List;
@@ -20,14 +20,10 @@ import java.util.List;
 public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHolder> {
     private List<Pizza> pizzaList;
     private Context context;
-    private FragmentManager fragmentManager;
-    private int fragmentContainerId;
 
-    public PizzaAdapter(List<Pizza> pizzaList, Context context, FragmentManager fragmentManager, int fragmentContainerId) {
+    public PizzaAdapter(List<Pizza> pizzaList, Context context) {
         this.pizzaList = pizzaList;
         this.context = context;
-        this.fragmentManager = fragmentManager;
-        this.fragmentContainerId = fragmentContainerId;
     }
 
     @Override
@@ -41,7 +37,9 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
         Pizza pizza = pizzaList.get(position);
         holder.nameTextView.setText(pizza.getName());
         holder.detailsButton.setOnClickListener(v -> {
-            showPizzaDetails(pizza);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("pizza", pizza);
+            Navigation.findNavController(v).navigate(R.id.action_nav_Menu_to_pizzaDetailsFragment, bundle);
         });
         holder.addToFavoritesButton.setOnClickListener(v -> {
             addToFavorites(pizza);
@@ -76,23 +74,11 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
         }
     }
 
-    private void showPizzaDetails(Pizza pizza) {
-        PizzaDetailsFragment pizzaDetailsFragment = PizzaDetailsFragment.newInstance(pizza);
-        fragmentManager.beginTransaction()
-                .replace(fragmentContainerId, pizzaDetailsFragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
     private void addToFavorites(Pizza pizza) {
         // Implement add to favorites logic
     }
 
     private void showOrderMenu(Pizza pizza) {
-        OrderMenuFragment orderMenuFragment = OrderMenuFragment.newInstance(pizza);
-        fragmentManager.beginTransaction()
-                .replace(fragmentContainerId, orderMenuFragment)
-                .addToBackStack(null)
-                .commit();
+        // Implement order menu dialog
     }
 }

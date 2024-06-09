@@ -13,18 +13,14 @@ import androidx.fragment.app.Fragment;
 import com.example.final_project_1200105.R;
 import com.example.final_project_1200105.activites.Pizza;
 
-import java.io.Serializable;
-
 public class PizzaDetailsFragment extends Fragment {
-
-    private static final String ARG_PIZZA = "pizza";
 
     private Pizza pizza;
 
     public static PizzaDetailsFragment newInstance(Pizza pizza) {
         PizzaDetailsFragment fragment = new PizzaDetailsFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_PIZZA, pizza);
+        args.putSerializable("pizza", pizza);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,14 +32,12 @@ public class PizzaDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pizza_details, container, false);
 
         if (getArguments() != null) {
-            pizza = (Pizza) getArguments().getSerializable(ARG_PIZZA);
+            pizza = (Pizza) getArguments().getSerializable("pizza");
         }
 
-        if (pizza != null) {
-            ((TextView) view.findViewById(R.id.pizza_name)).setText(pizza.getName());
-            ((TextView) view.findViewById(R.id.pizza_description)).setText(pizza.getDescription());
-            ((TextView) view.findViewById(R.id.pizza_price)).setText(String.valueOf(pizza.getPrice()));
-        }
+        ((TextView) view.findViewById(R.id.pizza_name)).setText(pizza.getName());
+        ((TextView) view.findViewById(R.id.pizza_description)).setText(pizza.getDescription());
+        ((TextView) view.findViewById(R.id.pizza_price)).setText(String.valueOf(pizza.getPrice()));
 
         return view;
     }
