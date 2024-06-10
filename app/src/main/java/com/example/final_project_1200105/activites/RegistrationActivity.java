@@ -1,9 +1,8 @@
-package com.example.final_project_1200105.activites;
-
+package com.example.final_project_1200105.activites;// In RegistrationActivity.java
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Patterns;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -11,14 +10,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.final_project_1200105.R;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -26,17 +19,14 @@ public class RegistrationActivity extends AppCompatActivity {
     private Spinner genderSpinner;
     private Button signUpButton;
     private TextView btnGoSignIn;
-    private DatabaseHelper dbHelper;
-
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^05\\d{8}$");
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
+    private UserDatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        dbHelper = new DatabaseHelper(this);
+        dbHelper = new UserDatabaseHelper(this);
 
         emailEditText = findViewById(R.id.RegEditText2);
         phoneEditText = findViewById(R.id.phoneEditText);
@@ -79,15 +69,17 @@ public class RegistrationActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString().trim();
         String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
-        if (!validateInput(email, phone, firstName, lastName, password, confirmPassword)) {
+        if (!validateInput(email, phone, firstName, lastName, password, confirmPassword , gender)) {
             return;
         }
 
         // Encrypt the password
-        String encryptedPassword = hashPassword(password);
+        String encryptedPassword = Hash.hashPassword(password);
+        Log.d("REG_DEBUG", "Email: " + email + ", Hashed Password: " + encryptedPassword);
 
-        // Insert the user into the database
-        boolean isInserted = dbHelper.insertUser(email, phone, firstName, lastName, gender, encryptedPassword);
+        // Create a new user and insert into the database
+        User user = new User(email, phone, firstName, lastName, gender, encryptedPassword);
+        boolean isInserted = dbHelper.insertUser(user);
 
         if (isInserted) {
             Toast.makeText(this, "Registration successful! Please log in.", Toast.LENGTH_SHORT).show();
@@ -95,57 +87,44 @@ public class RegistrationActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Registration failed! Try again.", Toast.LENGTH_SHORT).show();
+            emailEditText.setError("Email already exists");
         }
     }
 
-    private boolean validateInput(String email, String phone, String firstName, String lastName, String password, String confirmPassword) {
-        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailEditText.setError("Invalid email");
-            return false;
-        }
+    private boolean validateInput(String email, String phone, String firstName, String lastName, String password, String confirmPassword, String gender) {
+        try {
+            User tempUser = new User();
+            tempUser.setEmail(email);
+            tempUser.setPhoneNumber(phone);
+            tempUser.setFirstName(firstName);
+            tempUser.setLastName(lastName);
+            tempUser.setPassword(password);
+            tempUser.setGender(gender);
 
-        if (TextUtils.isEmpty(phone) || !PHONE_PATTERN.matcher(phone).matches()) {
-            phoneEditText.setError("Invalid phone number");
-            return false;
-        }
+            if (!password.equals(confirmPassword)) {
+                confirmPasswordEditText.setError("Passwords do not match");
+                return false;
+            }
 
-        if (TextUtils.isEmpty(firstName) || firstName.length() < 3) {
-            firstNameEditText.setError("First name must be at least 3 characters");
-            return false;
-        }
+        } catch (IllegalArgumentException e) {
 
-        if (TextUtils.isEmpty(lastName) || lastName.length() < 3) {
-            lastNameEditText.setError("Last name must be at least 3 characters");
-            return false;
-        }
-
-        if (TextUtils.isEmpty(password) || !PASSWORD_PATTERN.matcher(password).matches()) {
-            passwordEditText.setError("Password must be at least 8 characters and include at least 1 letter and 1 number");
-            return false;
-        }
-
-        if (!password.equals(confirmPassword)) {
-            confirmPasswordEditText.setError("Passwords do not match");
+            if (e.getMessage().contains("Invalid gender")) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            else if (e.getMessage().contains("email")) {
+                emailEditText.setError(e.getMessage());
+            } else if (e.getMessage().contains("phone number")) {
+                phoneEditText.setError(e.getMessage());
+            } else if (e.getMessage().contains("First name")) {
+                firstNameEditText.setError(e.getMessage());
+            } else if (e.getMessage().contains("Last name")) {
+                lastNameEditText.setError(e.getMessage());
+            } else if (e.getMessage().contains("Password")) {
+                passwordEditText.setError(e.getMessage());
+            }
             return false;
         }
 
         return true;
-    }
-
-    private String hashPassword(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes());
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hash) {
-                String hex = Integer.toHexString(0xff & b);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
