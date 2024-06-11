@@ -11,6 +11,24 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+
+    <string-array name="category_array">
+        <item>All</item>
+        <item>Chicken</item>
+        <item>Beef</item>
+        <item>Veggies</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="size_array">
+        <item>All</item>
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+
+
     <string name="title_activity_main2">MainActivity2</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -28,5 +46,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_orders">My Orders</string>
     <string name="ahmadszubaidia_gmail_com">Ahmadszubaidia@gmail.com</string>
+    <string name="Pizaa_menu" />
+    <string name="Pizza_menu" />
 
 </resources>

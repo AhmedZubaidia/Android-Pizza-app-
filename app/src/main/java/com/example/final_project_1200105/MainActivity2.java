@@ -3,8 +3,10 @@ package com.example.final_project_1200105;
 import android.os.Bundle;
 import android.view.Menu;
 
+import com.example.final_project_1200105.activites.SharedViewModel;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -16,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity2 extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private SharedViewModel sharedViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +32,20 @@ public class MainActivity2 extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_Menu, R.id.nav_favourite,R.id.nav_my_orders)
+                R.id.nav_home, R.id.nav_Menu, R.id.nav_favourite, R.id.nav_my_orders)
                 .setOpenableLayout(drawer)
                 .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // Retrieve the user email from the Intent
+        String userEmail = getIntent().getStringExtra("user_email");
+
+        // Initialize the SharedViewModel
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        sharedViewModel.setUserEmail(userEmail);
     }
 
     @Override

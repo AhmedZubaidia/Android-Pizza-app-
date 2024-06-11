@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_Menu"
         android:name="com.example.final_project_1200105.ui.gallery.PizzaMenuFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/Pizza_menu"
         tools:layout="@layout/menu_fragment">
         <action
             android:id="@+id/action_nav_Menu_to_pizzaDetailsFragment"
@@ -23,9 +23,9 @@
 
     <fragment
         android:id="@+id/nav_favourite"
-        android:name="com.example.final_project_1200105.ui.slideshow.FavouriteFragment"
+        android:name="com.example.final_project_1200105.ui.slideshow.FavoritesFragment"
         android:label="@string/Favourite"
-        tools:layout="@layout/favourite_fragment" />
+        tools:layout="@layout/favorites_fragment" />
 
     <fragment
         android:id="@+id/nav_my_orders"

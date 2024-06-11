@@ -58,8 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             boolean rememberMe = rememberMeCheckbox.isChecked();
 
             // Encrypt the entered password for comparison
-           String encryptedPassword = Hash.hashPassword(password);
-
+            String encryptedPassword = Hash.hashPassword(password);
 
             // Check login credentials
             if (dbHelper.checkUser(email, encryptedPassword)) {
@@ -76,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity2.class);
+                intent.putExtra("user_email", email); // Pass the email through the intent
                 startActivity(intent);
                 finish();
             } else {
