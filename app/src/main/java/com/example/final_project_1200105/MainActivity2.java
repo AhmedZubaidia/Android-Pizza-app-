@@ -2,6 +2,7 @@ package com.example.final_project_1200105;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.example.final_project_1200105.ui.Menu.SharedViewModel;
 import com.google.android.material.navigation.NavigationView;
@@ -31,6 +32,7 @@ public class MainActivity2 extends AppCompatActivity {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_Menu, R.id.nav_favourite, R.id.nav_my_orders,R.id.nav_Special_Offers,R.id.nav_Profile,R.id.nav_Contact_Us,R.id.nav_Logout)
                 .setOpenableLayout(drawer)
@@ -46,6 +48,9 @@ public class MainActivity2 extends AppCompatActivity {
         // Initialize the SharedViewModel
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
         sharedViewModel.setUserEmail(userEmail);
+
+        TextView emailTextView = navigationView.getHeaderView(0).findViewById(R.id.emailTextView_top_nav_header);
+        emailTextView.setText(userEmail);
     }
 
     @Override
