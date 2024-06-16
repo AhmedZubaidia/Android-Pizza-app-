@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_Menu"
-        android:name="com.example.final_project_1200105.ui.gallery.PizzaMenuFragment"
+        android:name="com.example.final_project_1200105.ui.Menu.PizzaMenuFragment"
         android:label="Pizza menu"
         tools:layout="@layout/menu_fragment">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/nav_favourite"
-        android:name="com.example.final_project_1200105.ui.slideshow.FavoritesFragment"
+        android:name="com.example.final_project_1200105.ui.favourite.FavoritesFragment"
         android:label="Favourite"
         tools:layout="@layout/favorites_fragment">
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/nav_my_orders"
-        android:name="com.example.final_project_1200105.ui.gallery.OrdersFragment"
+        android:name="com.example.final_project_1200105.ui.order.OrdersFragment"
         android:label="My Orders"
         tools:layout="@layout/fragment_my_orders">
         <action
@@ -43,15 +43,22 @@
 
     <fragment
         android:id="@+id/pizzaDetailsFragment"
-        android:name="com.example.final_project_1200105.ui.gallery.PizzaDetailsFragment"
+        android:name="com.example.final_project_1200105.ui.Menu.PizzaDetailsFragment"
         android:label="Pizza Details"
         tools:layout="@layout/fragment_pizza_details" />
 
     <fragment
         android:id="@+id/orderDetailsFragment"
-        android:name="com.example.final_project_1200105.ui.gallery.OrderDetailsFragment"
+        android:name="com.example.final_project_1200105.ui.order.OrderDetailsFragment"
         android:label="Order Details"
         tools:layout="@layout/fragment_my_orders" />
+
+
+    <fragment
+        android:id="@+id/nav_Profile"
+        android:name="com.example.final_project_1200105.ui.Profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 
 
 

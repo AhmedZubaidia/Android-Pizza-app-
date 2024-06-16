@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.ui.gallery;
+package com.example.final_project_1200105.ui.order;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,8 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.activites.OrdersDatabaseHelper;
-import com.example.final_project_1200105.activites.Pizza;
+import com.example.final_project_1200105.ui.Menu.Pizza;
 
 public class OrderDialogFragment extends DialogFragment {
 

@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.activites;
+package com.example.final_project_1200105.activites.lets_start;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.final_project_1200105.MainActivity2;
 import com.example.final_project_1200105.R;
+import com.example.final_project_1200105.activites.login_reg.LoginActivity;
+import com.example.final_project_1200105.activites.login_reg.RegistrationActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 

@@ -1,8 +1,6 @@
-package com.example.final_project_1200105.activites;
+package com.example.final_project_1200105.activites.login_reg;
 
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

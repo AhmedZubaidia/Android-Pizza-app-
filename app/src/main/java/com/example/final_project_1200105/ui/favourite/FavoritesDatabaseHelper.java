@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.activites;
+package com.example.final_project_1200105.ui.favourite;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import com.example.final_project_1200105.ui.Menu.Pizza;
 
 import java.util.ArrayList;
 import java.util.List;

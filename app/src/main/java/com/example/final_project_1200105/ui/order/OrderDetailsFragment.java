@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.ui.gallery;
+package com.example.final_project_1200105.ui.order;
 
 
 import android.annotation.SuppressLint;
@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.activites.Order;
 
 
 public class OrderDetailsFragment extends Fragment {

@@ -1,7 +1,6 @@
-package com.example.final_project_1200105.activites;// In RegistrationActivity.java
+package com.example.final_project_1200105.activites.login_reg;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -112,14 +111,23 @@ public class RegistrationActivity extends AppCompatActivity {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
             else if (e.getMessage().contains("email")) {
+
                 emailEditText.setError(e.getMessage());
+
             } else if (e.getMessage().contains("phone number")) {
+
                 phoneEditText.setError(e.getMessage());
+
             } else if (e.getMessage().contains("First name")) {
+
                 firstNameEditText.setError(e.getMessage());
+
             } else if (e.getMessage().contains("Last name")) {
+
                 lastNameEditText.setError(e.getMessage());
+
             } else if (e.getMessage().contains("Password")) {
+
                 passwordEditText.setError(e.getMessage());
             }
             return false;

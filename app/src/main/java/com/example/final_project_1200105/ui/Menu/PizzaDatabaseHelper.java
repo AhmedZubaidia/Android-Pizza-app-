@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.activites;
+package com.example.final_project_1200105.ui.Menu;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;

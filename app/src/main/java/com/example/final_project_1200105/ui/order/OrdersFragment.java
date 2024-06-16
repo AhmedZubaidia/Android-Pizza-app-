@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.ui.gallery;
+package com.example.final_project_1200105.ui.order;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.activites.Order;
-import com.example.final_project_1200105.activites.OrderAdapter;
-import com.example.final_project_1200105.activites.OrdersDatabaseHelper;
-import com.example.final_project_1200105.activites.SharedViewModel;
+import com.example.final_project_1200105.ui.Menu.SharedViewModel;
 
 import java.util.List;
 

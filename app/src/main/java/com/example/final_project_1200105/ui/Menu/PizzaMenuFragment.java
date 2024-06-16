@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.ui.gallery;
+package com.example.final_project_1200105.ui.Menu;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,10 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.activites.Pizza;
-import com.example.final_project_1200105.activites.PizzaAdapter;
-import com.example.final_project_1200105.activites.PizzaDatabaseHelper;
-import com.example.final_project_1200105.activites.SharedViewModel;
 
 import java.util.List;
 import java.util.stream.Collectors;

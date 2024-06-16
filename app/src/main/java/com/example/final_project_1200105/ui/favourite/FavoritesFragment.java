@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.ui.slideshow;
+package com.example.final_project_1200105.ui.favourite;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.activites.SharedViewModel;
-import com.example.final_project_1200105.activites.Pizza;
-import com.example.final_project_1200105.activites.PizzaAdapter;
-import com.example.final_project_1200105.activites.FavoritesDatabaseHelper;
+import com.example.final_project_1200105.ui.Menu.SharedViewModel;
+import com.example.final_project_1200105.ui.Menu.Pizza;
+import com.example.final_project_1200105.ui.Menu.PizzaAdapter;
 
 import java.util.List;
 

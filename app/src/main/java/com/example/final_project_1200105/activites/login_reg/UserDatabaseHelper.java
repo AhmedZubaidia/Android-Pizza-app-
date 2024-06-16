@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.activites;
+package com.example.final_project_1200105.activites.login_reg;
 
 
 import android.annotation.SuppressLint;
@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -85,4 +84,49 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
+
+    public boolean updateUser(String email, String firstName, String lastName, String password, String phone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_FIRST_NAME, firstName);
+        values.put(COLUMN_LAST_NAME, lastName);
+        values.put(COLUMN_PASSWORD, password);
+        values.put(COLUMN_PHONE, phone);
+
+        String selection = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = {email};
+
+        int result = db.update(TABLE_USER, values, selection, selectionArgs);
+        return result > 0;
+    }
+
+    public User getUserByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_EMAIL, COLUMN_PHONE, COLUMN_FIRST_NAME, COLUMN_LAST_NAME, COLUMN_GENDER, COLUMN_PASSWORD};
+        String selection = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            @SuppressLint("Range") String userEmail = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL));
+            @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(COLUMN_PHONE));
+            @SuppressLint("Range") String firstName = cursor.getString(cursor.getColumnIndex(COLUMN_FIRST_NAME));
+            @SuppressLint("Range") String lastName = cursor.getString(cursor.getColumnIndex(COLUMN_LAST_NAME));
+            @SuppressLint("Range") String gender = cursor.getString(cursor.getColumnIndex(COLUMN_GENDER));
+            @SuppressLint("Range") String password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
+
+            User user = new User(userEmail, phone, firstName, lastName, gender, password);
+            cursor.close();
+            return user;
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+        return null;
+    }
 }
+
+
+

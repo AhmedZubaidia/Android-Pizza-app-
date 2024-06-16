@@ -3,7 +3,7 @@ package com.example.final_project_1200105;
 import android.os.Bundle;
 import android.view.Menu;
 
-import com.example.final_project_1200105.activites.SharedViewModel;
+import com.example.final_project_1200105.ui.Menu.SharedViewModel;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.lifecycle.ViewModelProvider;

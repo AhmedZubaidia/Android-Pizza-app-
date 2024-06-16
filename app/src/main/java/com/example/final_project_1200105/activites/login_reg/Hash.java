@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.activites;
+package com.example.final_project_1200105.activites.login_reg;
 
 // In Hash.java
 import java.security.MessageDigest;
