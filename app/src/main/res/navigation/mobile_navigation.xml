@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_Menu"
         android:name="com.example.final_project_1200105.ui.gallery.PizzaMenuFragment"
-        android:label="@string/Pizza_menu"
+        android:label="Pizza menu"
         tools:layout="@layout/menu_fragment">
         <action
             android:id="@+id/action_nav_Menu_to_pizzaDetailsFragment"
@@ -24,19 +24,35 @@
     <fragment
         android:id="@+id/nav_favourite"
         android:name="com.example.final_project_1200105.ui.slideshow.FavoritesFragment"
-        android:label="@string/Favourite"
-        tools:layout="@layout/favorites_fragment" />
+        android:label="Favourite"
+        tools:layout="@layout/favorites_fragment">
+        <action
+            android:id="@+id/action_nav_Menu_to_pizzaDetailsFragment"
+            app:destination="@id/pizzaDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_my_orders"
-        android:name="com.example.final_project_1200105.activites.MyOrdersFragment"
-        android:label="@string/my_orders"
-        tools:layout="@layout/fragment_my_orders" />
+        android:name="com.example.final_project_1200105.ui.gallery.OrdersFragment"
+        android:label="My Orders"
+        tools:layout="@layout/fragment_my_orders">
+        <action
+            android:id="@+id/action_nav_my_orders_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/pizzaDetailsFragment"
         android:name="com.example.final_project_1200105.ui.gallery.PizzaDetailsFragment"
         android:label="Pizza Details"
         tools:layout="@layout/fragment_pizza_details" />
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.final_project_1200105.ui.gallery.OrderDetailsFragment"
+        android:label="Order Details"
+        tools:layout="@layout/fragment_my_orders" />
+
+
 
 </navigation>

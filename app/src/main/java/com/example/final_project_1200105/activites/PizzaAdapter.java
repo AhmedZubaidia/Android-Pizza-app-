@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.activites;
+package com.example.final_project_1200105.activites ;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -22,6 +22,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     private List<Pizza> pizzaList;
     private Context context;
     private FavoritesDatabaseHelper favoritesDatabaseHelper;
+    private OrdersDatabaseHelper ordersDatabaseHelper;
     private boolean isFavoritesContext;
     private String userEmail;
 
@@ -30,6 +31,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
         this.context = context;
         this.userEmail = userEmail;
         favoritesDatabaseHelper = new FavoritesDatabaseHelper(context);
+        ordersDatabaseHelper = new OrdersDatabaseHelper(context);
     }
 
     public void setFavoritesContext(boolean isFavoritesContext) {
@@ -123,7 +125,10 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     }
 
     private void showOrderMenu(Pizza pizza) {
-        OrderDialogFragment orderDialog = OrderDialogFragment.newInstance(pizza);
+        OrderDialogFragment orderDialog = OrderDialogFragment.newInstance(pizza, userEmail , ordersDatabaseHelper, context);
         orderDialog.show(((AppCompatActivity) context).getSupportFragmentManager(), "order_dialog");
     }
 }
+
+
+

@@ -1,5 +1,6 @@
 package com.example.final_project_1200105.ui.gallery;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +15,29 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.final_project_1200105.R;
+import com.example.final_project_1200105.activites.OrdersDatabaseHelper;
 import com.example.final_project_1200105.activites.Pizza;
 
 public class OrderDialogFragment extends DialogFragment {
 
     private Pizza pizza;
+    private static String userEmail;
 
-    public static OrderDialogFragment newInstance(Pizza pizza) {
+    private static Context context;
+
+    private static OrdersDatabaseHelper ordersDatabaseHelper;
+
+    public static OrderDialogFragment newInstance(Pizza pizza,String user_string, OrdersDatabaseHelper db, Context c ) {
         OrderDialogFragment fragment = new OrderDialogFragment();
         Bundle args = new Bundle();
         args.putSerializable("pizza", pizza);
         fragment.setArguments(args);
+        userEmail = user_string;
+        ordersDatabaseHelper = db;
+        context = c;
+
         return fragment;
+
     }
 
     @Nullable
@@ -55,6 +67,8 @@ public class OrderDialogFragment extends DialogFragment {
             int quantity = Integer.parseInt(quantityStr);
             double totalPrice = pizza.getPrice() * quantity;
 
+
+
             // Show order confirmation
             Toast.makeText(getContext(), "Order Confirmed:\n" +
                     "Pizza: " + pizza.getName() + "\n" +
@@ -62,11 +76,36 @@ public class OrderDialogFragment extends DialogFragment {
                     "Quantity: " + quantity + "\n" +
                     "Total Price: $" + totalPrice, Toast.LENGTH_LONG).show();
 
+
+            pizza.setDescription("Order Details:\n" +
+                    "Pizza: " + pizza.getName() + "\n" +
+                    "Size: " + pizza.getSize() + "\n" +
+                    "Quantity: " + quantity + "\n" +
+                    "Total Price: $" + totalPrice);
+
+            pizza.setPrice(totalPrice);
+            placeOrder(pizza);
+
             dismiss();
         });
 
+
         return view;
     }
+
+    private void placeOrder(Pizza pizza) {
+        String dateTime = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault()).format(new java.util.Date());
+        String temp_str = pizza.getDescription();
+        temp_str = temp_str +  "\n" + dateTime;
+        String orderDetails = temp_str;
+        boolean isOrdered = ordersDatabaseHelper.insertOrder(userEmail, dateTime, orderDetails);
+        if (isOrdered) {
+            Toast.makeText(context, "Order placed successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Failed to place order", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @Override
     public void onStart() {
