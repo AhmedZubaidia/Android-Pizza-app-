@@ -8,14 +8,24 @@ public class Pizza implements Serializable {
     private double price;
     private String size;
     private String category;
+    private boolean isSpecialOffer;
+    private String offerPeriod;
+    private double offerPrice;
 
-    public Pizza(String name, String description, double price, String size, String category) {
+
+
+    public Pizza(String name, String description, double price, String size, String category, boolean isSpecialOffer, String offerPeriod, double offerPrice) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.size = size;
         this.category = category;
+        this.isSpecialOffer = isSpecialOffer;
+        this.offerPeriod = offerPeriod;
+        this.offerPrice = offerPrice;
     }
+
+
 
     // Getters and setters for each field
     public String getName() {
@@ -56,5 +66,29 @@ public class Pizza implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean isSpecialOffer() {
+        return isSpecialOffer;
+    }
+
+    public void setSpecialOffer(boolean specialOffer) {
+        isSpecialOffer = specialOffer;
+    }
+
+    public String getOfferPeriod() {
+        return offerPeriod;
+    }
+
+    public void setOfferPeriod(String offerPeriod) {
+        this.offerPeriod = offerPeriod;
+    }
+
+    public double getOfferPrice() {
+        return offerPrice;
+    }
+
+    public void setOfferPrice(double offerPrice) {
+        this.offerPrice = offerPrice;
     }
 }

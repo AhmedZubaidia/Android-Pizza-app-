@@ -10,31 +10,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pizza Name"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/specialOfferTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Special Offer Details"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/detailsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Details"/>
+        android:text="Details" />
 
     <Button
         android:id="@+id/addToFavoritesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add to Favorites"/>
+        android:text="Add to Favorites" />
 
     <Button
         android:id="@+id/removeFromFavoritesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remove from Favorites"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/orderButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Order"/>
+        android:text="Order" />
 </LinearLayout>

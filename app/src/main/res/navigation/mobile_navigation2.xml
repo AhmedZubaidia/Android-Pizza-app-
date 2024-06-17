@@ -28,7 +28,17 @@
         android:id="@+id/nav_View_Orders"
         android:name="com.example.final_project_1200105.ui_admin.admin.vieworders.ViewOrdersFragment"
         android:label="View All Orders"
-        tools:layout="@layout/fragment_view_orders" />
+        tools:layout="@layout/fragment_view_orders">
+        <action
+            android:id="@+id/action_nav_View_Orders_to_orderDetailsFragment"
+            app:destination="@id/orderDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailsFragment"
+        android:name="com.example.final_project_1200105.ui.order.OrderDetailsFragment"
+        android:label="Order Details"
+        tools:layout="@layout/order_details" />
 
     <fragment
         android:id="@+id/nav_Add_Special_Offers"

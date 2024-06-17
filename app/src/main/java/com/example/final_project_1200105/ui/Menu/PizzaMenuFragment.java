@@ -118,19 +118,19 @@ public class PizzaMenuFragment extends Fragment {
     private void initializePizzaData() {
         // Check if the pizza table is empty before inserting data
         if (databaseHelper.getAllPizzas().isEmpty()) {
-            databaseHelper.insertPizza(new Pizza("Margarita", "Classic Margarita pizza with fresh tomatoes and mozzarella", 8.99, "Medium", "Veggie"));
-            databaseHelper.insertPizza(new Pizza("Neapolitan", "Authentic Neapolitan pizza with San Marzano tomatoes", 9.99, "Large", "Veggie"));
-            databaseHelper.insertPizza(new Pizza("Hawaiian", "Sweet and savory Hawaiian pizza with pineapple and ham", 10.99, "Small", "Chicken"));
-            databaseHelper.insertPizza(new Pizza("Pepperoni", "Spicy Pepperoni pizza with mozzarella and marinara sauce", 11.99, "Medium", "Beef"));
-            databaseHelper.insertPizza(new Pizza("New York Style", "Thin crust New York style pizza with a classic cheese topping", 12.99, "Large", "Veggie"));
-            databaseHelper.insertPizza(new Pizza("Calzone", "Folded Calzone pizza stuffed with ricotta and salami", 13.99, "Medium", "Beef"));
-            databaseHelper.insertPizza(new Pizza("Tandoori Chicken Pizza", "Spicy Tandoori chicken pizza with red onions and cilantro", 14.99, "Small", "Chicken"));
-            databaseHelper.insertPizza(new Pizza("BBQ Chicken Pizza", "Tangy BBQ chicken pizza with red onions and cilantro", 15.99, "Large", "Chicken"));
-            databaseHelper.insertPizza(new Pizza("Seafood Pizza", "Delicious Seafood pizza with shrimp and calamari", 16.99, "Medium", "Seafood"));
-            databaseHelper.insertPizza(new Pizza("Vegetarian Pizza", "Healthy Vegetarian pizza with bell peppers, olives, and onions", 17.99, "Large", "Veggie"));
-            databaseHelper.insertPizza(new Pizza("Buffalo Chicken Pizza", "Spicy Buffalo chicken pizza with blue cheese dressing", 18.99, "Medium", "Chicken"));
-            databaseHelper.insertPizza(new Pizza("Mushroom Truffle Pizza", "Gourmet Mushroom Truffle pizza with a rich truffle sauce", 19.99, "Small", "Veggie"));
-            databaseHelper.insertPizza(new Pizza("Pesto Chicken Pizza", "Savory Pesto chicken pizza with sun-dried tomatoes", 20.99, "Large", "Chicken"));
+            databaseHelper.insertPizza(new Pizza("Margarita", "Classic Margarita pizza with fresh tomatoes and mozzarella", 8.99, "Medium", "Veggie",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Neapolitan", "Authentic Neapolitan pizza with San Marzano tomatoes", 9.99, "Large", "Veggie",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Hawaiian", "Sweet and savory Hawaiian pizza with pineapple and ham", 10.99, "Small", "Chicken",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Pepperoni", "Spicy Pepperoni pizza with mozzarella and marinara sauce", 11.99, "Medium", "Beef",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("New York Style", "Thin crust New York style pizza with a classic cheese topping", 12.99, "Large", "Veggie",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Calzone", "Folded Calzone pizza stuffed with ricotta and salami", 13.99, "Medium", "Beef",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Tandoori Chicken Pizza", "Spicy Tandoori chicken pizza with red onions and cilantro", 14.99, "Small", "Chicken",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("BBQ Chicken Pizza", "Tangy BBQ chicken pizza with red onions and cilantro", 15.99, "Large", "Chicken",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Seafood Pizza", "Delicious Seafood pizza with shrimp and calamari", 16.99, "Medium", "Seafood",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Vegetarian Pizza", "Healthy Vegetarian pizza with bell peppers, olives, and onions", 17.99, "Large", "Veggie",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Buffalo Chicken Pizza", "Spicy Buffalo chicken pizza with blue cheese dressing", 18.99, "Medium", "Chicken",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Mushroom Truffle Pizza", "Gourmet Mushroom Truffle pizza with a rich truffle sauce", 19.99, "Small", "Veggie",false, null, 0));
+            databaseHelper.insertPizza(new Pizza("Pesto Chicken Pizza", "Savory Pesto chicken pizza with sun-dried tomatoes", 20.99, "Large", "Chicken",false, null, 0));
         }
     }
 }

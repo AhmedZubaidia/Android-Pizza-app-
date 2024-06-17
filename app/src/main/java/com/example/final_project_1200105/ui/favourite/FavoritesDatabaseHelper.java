@@ -14,9 +14,10 @@ import com.example.final_project_1200105.ui.Menu.Pizza;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class FavoritesDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; // Updated version
     private static final String DATABASE_NAME = "FavoriteDatabase.db";
     private static final String TABLE_FAVORITES = "FAVORITES";
     private static final String COLUMN_ID = "ID";
@@ -26,6 +27,9 @@ public class FavoritesDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PRICE = "PRICE";
     private static final String COLUMN_SIZE = "SIZE";
     private static final String COLUMN_CATEGORY = "CATEGORY";
+    private static final String COLUMN_IS_SPECIAL_OFFER = "IS_SPECIAL_OFFER";
+    private static final String COLUMN_OFFER_PERIOD = "OFFER_PERIOD";
+    private static final String COLUMN_OFFER_PRICE = "OFFER_PRICE";
 
     public FavoritesDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -40,14 +44,20 @@ public class FavoritesDatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DESCRIPTION + " TEXT,"
                 + COLUMN_PRICE + " REAL,"
                 + COLUMN_SIZE + " TEXT,"
-                + COLUMN_CATEGORY + " TEXT" + ")";
+                + COLUMN_CATEGORY + " TEXT,"
+                + COLUMN_IS_SPECIAL_OFFER + " INTEGER,"
+                + COLUMN_OFFER_PERIOD + " TEXT,"
+                + COLUMN_OFFER_PRICE + " REAL" + ")";
         db.execSQL(CREATE_FAVORITES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + TABLE_FAVORITES + " ADD COLUMN " + COLUMN_IS_SPECIAL_OFFER + " INTEGER DEFAULT 0");
+            db.execSQL("ALTER TABLE " + TABLE_FAVORITES + " ADD COLUMN " + COLUMN_OFFER_PERIOD + " TEXT");
+            db.execSQL("ALTER TABLE " + TABLE_FAVORITES + " ADD COLUMN " + COLUMN_OFFER_PRICE + " REAL");
+        }
     }
 
     public boolean insertFavorite(String userEmail, Pizza pizza) {
@@ -63,6 +73,9 @@ public class FavoritesDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_PRICE, pizza.getPrice());
         values.put(COLUMN_SIZE, pizza.getSize());
         values.put(COLUMN_CATEGORY, pizza.getCategory());
+        values.put(COLUMN_IS_SPECIAL_OFFER, pizza.isSpecialOffer() ? 1 : 0);
+        values.put(COLUMN_OFFER_PERIOD, pizza.getOfferPeriod());
+        values.put(COLUMN_OFFER_PRICE, pizza.getOfferPrice());
 
         long result = db.insert(TABLE_FAVORITES, null, values);
         if (result != -1) {
@@ -99,7 +112,11 @@ public class FavoritesDatabaseHelper extends SQLiteOpenHelper {
                     @SuppressLint("Range") double price = cursor.getDouble(cursor.getColumnIndex(COLUMN_PRICE));
                     @SuppressLint("Range") String size = cursor.getString(cursor.getColumnIndex(COLUMN_SIZE));
                     @SuppressLint("Range") String category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY));
-                    Pizza pizza = new Pizza(name, description, price, size, category);
+                    @SuppressLint("Range") boolean isSpecialOffer = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_SPECIAL_OFFER)) == 1;
+                    @SuppressLint("Range") String offerPeriod = cursor.getString(cursor.getColumnIndex(COLUMN_OFFER_PERIOD));
+                    @SuppressLint("Range") double offerPrice = cursor.getDouble(cursor.getColumnIndex(COLUMN_OFFER_PRICE));
+
+                    Pizza pizza = new Pizza(name, description, price, size, category, isSpecialOffer, offerPeriod, offerPrice);
                     favoriteList.add(pizza);
                     Log.d("FavoritesDB", "Retrieved favorite: " + pizza.getName());
                 } while (cursor.moveToNext());

@@ -37,7 +37,7 @@
         android:label="My Orders"
         tools:layout="@layout/fragment_my_orders">
         <action
-            android:id="@+id/action_nav_my_orders_to_orderDetailsFragment"
+            android:id="@+id/action_nav_View_Orders_to_orderDetailsFragment"
             app:destination="@id/orderDetailsFragment" />
     </fragment>
 
@@ -51,7 +51,7 @@
         android:id="@+id/orderDetailsFragment"
         android:name="com.example.final_project_1200105.ui.order.OrderDetailsFragment"
         android:label="Order Details"
-        tools:layout="@layout/fragment_my_orders" />
+        tools:layout="@layout/order_details" />
 
 
     <fragment
@@ -66,6 +66,15 @@
         android:label="Contact Us"
         tools:layout="@layout/fragment_contact_us" />
 
+    <fragment
+        android:id="@+id/nav_Special_Offers"
+        android:name="com.example.final_project_1200105.ui.SpecialOffers.SpecialOffersFragment"
+        android:label="Special Offers"
+        tools:layout="@layout/fragment_special_offers" >
+        <action
+            android:id="@+id/action_nav_Menu_to_pizzaDetailsFragment"
+            app:destination="@id/pizzaDetailsFragment" />
+    </fragment>
 
 
 </navigation>

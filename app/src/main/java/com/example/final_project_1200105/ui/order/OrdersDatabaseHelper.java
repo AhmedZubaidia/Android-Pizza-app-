@@ -128,4 +128,40 @@ public class OrdersDatabaseHelper extends SQLiteOpenHelper {
         }
         return result > 0;
     }
+
+
+    public List<Order> getAllOrders() {
+        List<Order> orderList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_ORDERS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        Log.d("OrdersDB", "Query: " + selectQuery);
+
+        try {
+            cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    @SuppressLint("Range") int id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+                    @SuppressLint("Range") String userEmail = cursor.getString(cursor.getColumnIndex(COLUMN_USER_EMAIL));
+                    @SuppressLint("Range") String dateTime = cursor.getString(cursor.getColumnIndex(COLUMN_DATE_TIME));
+                    @SuppressLint("Range") String orderDetails = cursor.getString(cursor.getColumnIndex(COLUMN_ORDER_DETAILS));
+                    Order order = new Order(id, userEmail, dateTime, orderDetails);
+                    orderList.add(order);
+                    Log.d("OrdersDB", "Retrieved order: " + order.getId() + " at " + order.getDateTime());
+                } while (cursor.moveToNext());
+            } else {
+                Log.d("OrdersDB", "No orders found");
+            }
+        } catch (Exception e) {
+            Log.e("OrdersDB", "Error retrieving orders", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return orderList;
+    }
+
+
 }

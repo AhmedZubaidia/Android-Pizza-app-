@@ -17,6 +17,8 @@ import androidx.fragment.app.DialogFragment;
 import com.example.final_project_1200105.R;
 import com.example.final_project_1200105.ui.Menu.Pizza;
 
+import java.text.DecimalFormat;
+
 public class OrderDialogFragment extends DialogFragment {
 
     private Pizza pizza;
@@ -65,6 +67,8 @@ public class OrderDialogFragment extends DialogFragment {
 
             int quantity = Integer.parseInt(quantityStr);
             double totalPrice = pizza.getPrice() * quantity;
+            DecimalFormat df = new DecimalFormat("#.00");
+            totalPrice = Double.parseDouble(df.format(totalPrice));
 
 
 
@@ -78,6 +82,7 @@ public class OrderDialogFragment extends DialogFragment {
 
             pizza.setDescription("Order Details:\n" +
                     "Pizza: " + pizza.getName() + "\n" +
+                    "Pizza Category: " + pizza.getCategory() + "\n" +
                     "Size: " + pizza.getSize() + "\n" +
                     "Quantity: " + quantity + "\n" +
                     "Total Price: $" + totalPrice);

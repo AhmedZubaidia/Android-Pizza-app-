@@ -1,66 +1,140 @@
 package com.example.final_project_1200105.ui_admin.admin.addoffers;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.final_project_1200105.R;
+import com.example.final_project_1200105.ui.Menu.Pizza;
+import com.example.final_project_1200105.ui.Menu.PizzaDatabaseHelper;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AddOffersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
 public class AddOffersFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private Spinner pizzaTypeSpinner, categorySpinner, sizeSpinner;
+    private EditText offerPeriodEditText, totalPriceEditText;
+    private Button addOfferButton;
+    private PizzaDatabaseHelper pizzaDatabaseHelper;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AddOffersFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddOffersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AddOffersFragment newInstance(String param1, String param2) {
-        AddOffersFragment fragment = new AddOffersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_add_offers, container, false);
+
+        pizzaDatabaseHelper = new PizzaDatabaseHelper(getContext());
+
+        pizzaTypeSpinner = view.findViewById(R.id.pizzaTypeSpinner);
+        categorySpinner = view.findViewById(R.id.categorySpinner);
+        sizeSpinner = view.findViewById(R.id.sizeSpinner);
+        offerPeriodEditText = view.findViewById(R.id.offerPeriodEditText);
+        totalPriceEditText = view.findViewById(R.id.totalPriceEditText);
+        addOfferButton = view.findViewById(R.id.addOfferButton);
+
+        // Load data into spinners
+        loadPizzaTypes();
+        setupCategorySpinner();
+        setupSizeSpinner();
+
+        addOfferButton.setOnClickListener(v -> addOffer());
+
+        return view;
+    }
+
+    private void loadPizzaTypes() {
+        // Fetch pizza types from the database
+        List<Pizza> pizzaList = pizzaDatabaseHelper.getAllPizzas();
+        String[] pizzaNames = new String[pizzaList.size()];
+
+        for (int i = 0; i < pizzaList.size(); i++) {
+            pizzaNames[i] = pizzaList.get(i).getName();
+        }
+
+        // Set pizza types to the spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, pizzaNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        pizzaTypeSpinner.setAdapter(adapter);
+    }
+
+    private void setupCategorySpinner() {
+        // Set categories to the spinner from resources
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.category_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter);
+    }
+
+    private void setupSizeSpinner() {
+        // Set sizes to the spinner from resources
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.size_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sizeSpinner.setAdapter(adapter);
+    }
+
+    private void addOffer() {
+        // Get data from the views
+        String pizzaType = pizzaTypeSpinner.getSelectedItem().toString();
+        String category = categorySpinner.getSelectedItem().toString();
+        String size = sizeSpinner.getSelectedItem().toString();
+        String offerPeriod = offerPeriodEditText.getText().toString().trim();
+        String totalPrice = totalPriceEditText.getText().toString().trim();
+
+        if (pizzaType.isEmpty() || category.isEmpty() || size.isEmpty() || offerPeriod.isEmpty() || totalPrice.isEmpty()) {
+            Toast.makeText(getActivity(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double price;
+        try {
+            price = Double.parseDouble(totalPrice);
+        } catch (NumberFormatException e) {
+            Toast.makeText(getActivity(), "Invalid price", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check if a pizza with the same name, category, and size exists
+        Pizza existingPizza = pizzaDatabaseHelper.getPizzaByNameCategorySize(pizzaType, category, size);
+        if (existingPizza != null) {
+            // Update existing pizza
+            existingPizza.setSpecialOffer(true);
+            existingPizza.setOfferPeriod(offerPeriod);
+            existingPizza.setOfferPrice(price);
+            boolean isUpdated = pizzaDatabaseHelper.updatePizza(existingPizza);
+            if (isUpdated) {
+                Toast.makeText(getActivity(), "Special offer updated successfully", Toast.LENGTH_SHORT).show();
+                clearFields();
+            } else {
+                Toast.makeText(getActivity(), "Failed to update special offer", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // Insert new pizza
+            Pizza pizza = new Pizza(pizzaType, "Special offer", price, size, category, true, offerPeriod, price);
+            boolean isInserted = pizzaDatabaseHelper.insertPizza(pizza);
+            if (isInserted) {
+                Toast.makeText(getActivity(), "Special offer added successfully", Toast.LENGTH_SHORT).show();
+                clearFields();
+            } else {
+                Toast.makeText(getActivity(), "Failed to add special offer", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_offers, container, false);
+    private void clearFields() {
+        pizzaTypeSpinner.setSelection(0);
+        categorySpinner.setSelection(0);
+        sizeSpinner.setSelection(0);
+        offerPeriodEditText.setText("");
+        totalPriceEditText.setText("");
     }
 }

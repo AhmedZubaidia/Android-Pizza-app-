@@ -1,6 +1,7 @@
 package com.example.final_project_1200105.ui.Menu;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,18 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
         Pizza pizza = pizzaList.get(position);
         holder.nameTextView.setText(pizza.getName());
 
+        // Highlight special offers
+        if (pizza.isSpecialOffer()) {
+            holder.nameTextView.setTextColor(Color.RED);
+            holder.specialOfferTextView.setVisibility(View.VISIBLE);
+            holder.specialOfferTextView.setText(
+                    String.format("Special Offer: %s\nOffer Period: %s\nOffer Price: $%.2f",
+                            pizza.getDescription(), pizza.getOfferPeriod(), pizza.getOfferPrice()));
+        } else {
+            holder.nameTextView.setTextColor(Color.BLACK);
+            holder.specialOfferTextView.setVisibility(View.GONE);
+        }
+
         if (isFavoritesContext) {
             holder.addToFavoritesButton.setVisibility(View.GONE);
             holder.removeFromFavoritesButton.setVisibility(View.VISIBLE);
@@ -90,6 +103,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
 
     public class PizzaViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
+        TextView specialOfferTextView;
         Button detailsButton;
         Button addToFavoritesButton;
         Button removeFromFavoritesButton;
@@ -98,6 +112,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
         public PizzaViewHolder(View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.nameTextView);
+            specialOfferTextView = itemView.findViewById(R.id.specialOfferTextView);
             detailsButton = itemView.findViewById(R.id.detailsButton);
             addToFavoritesButton = itemView.findViewById(R.id.addToFavoritesButton);
             removeFromFavoritesButton = itemView.findViewById(R.id.removeFromFavoritesButton);
@@ -131,6 +146,3 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
         orderDialog.show(((AppCompatActivity) context).getSupportFragmentManager(), "order_dialog");
     }
 }
-
-
-
