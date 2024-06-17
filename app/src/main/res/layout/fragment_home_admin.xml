@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui_admin.admin.home.HomeFragmentAdmin"
+    android:background="@color/mediumGray">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewHistory"
+            android:layout_width="352dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@color/mediumGray"
+            android:padding="16dp"
+            android:text="Welcome to the Admin Section! Here you can manage the restaurant's operations, view orders, add new admins, and create special offers. Our goal is to provide a seamless experience for managing the restaurant, ensuring everything runs smoothly. Dive in and explore the features designed to make your administrative tasks easier and more efficient."
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

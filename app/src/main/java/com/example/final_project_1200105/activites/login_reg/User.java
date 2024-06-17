@@ -1,6 +1,5 @@
 package com.example.final_project_1200105.activites.login_reg;
 
-
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,17 +12,19 @@ public class User {
     private String lastName;
     private String gender;
     private String password;
+    private boolean isAdmin;
 
     public User() {
     }
 
-    public User(String email, String phoneNumber, String firstName, String lastName, String gender, String password) {
+    public User(String email, String phoneNumber, String firstName, String lastName, String gender, String password, boolean isAdmin) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     // Getters and Setters
@@ -92,11 +93,20 @@ public class User {
 
     public void setPassword(String password) {
         if (isValidPassword(password)) {
-            this.password =password;
+            this.password = password;
         } else {
             throw new IllegalArgumentException("Password must be at least 8 characters long and include at least 1 letter and 1 number");
         }
     }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     // Validation methods
     private boolean isValidEmail(String email) {
         Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
@@ -120,7 +130,7 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
+                ", isAdmin=" + isAdmin +
                 '}';
     }
-
 }

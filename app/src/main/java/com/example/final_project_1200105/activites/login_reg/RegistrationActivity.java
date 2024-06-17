@@ -77,7 +77,7 @@ public class RegistrationActivity extends AppCompatActivity {
         Log.d("REG_DEBUG", "Email: " + email + ", Hashed Password: " + encryptedPassword);
 
         // Create a new user and insert into the database
-        User user = new User(email, phone, firstName, lastName, gender, encryptedPassword);
+        User user = new User(email, phone, firstName, lastName, gender, encryptedPassword, false);
         boolean isInserted = dbHelper.insertUser(user);
 
         if (isInserted) {

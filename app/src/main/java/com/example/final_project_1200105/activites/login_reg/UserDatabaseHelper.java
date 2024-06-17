@@ -1,6 +1,5 @@
 package com.example.final_project_1200105.activites.login_reg;
 
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,12 +10,11 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-
 public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     Context context;
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "UserDatabase.db";
+    private static final String DATABASE_NAME = "UserDatabaseAndAdmin.db";
     private static final String TABLE_USER = "USERS";
     private static final String COLUMN_EMAIL = "EMAIL";
     private static final String COLUMN_PHONE = "PHONE";
@@ -24,6 +22,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_LAST_NAME = "LAST_NAME";
     private static final String COLUMN_GENDER = "GENDER";
     private static final String COLUMN_PASSWORD = "PASSWORD";
+    private static final String COLUMN_IS_ADMIN = "IS_ADMIN";
 
     public UserDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,7 +36,8 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_FIRST_NAME + " TEXT,"
                 + COLUMN_LAST_NAME + " TEXT,"
                 + COLUMN_GENDER + " TEXT,"
-                + COLUMN_PASSWORD + " TEXT" + ")";
+                + COLUMN_PASSWORD + " TEXT,"
+                + COLUMN_IS_ADMIN + " INTEGER" + ")";
         db.execSQL(CREATE_USER_TABLE);
     }
 
@@ -47,7 +47,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean  insertUser(User user) {
+    public boolean insertUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_EMAIL, user.getEmail());
@@ -56,9 +56,9 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_LAST_NAME, user.getLastName());
         values.put(COLUMN_GENDER, user.getGender());
         values.put(COLUMN_PASSWORD, user.getPassword());
-       Long result = db.insert(TABLE_USER, null, values);
+        values.put(COLUMN_IS_ADMIN, user.isAdmin() ? 1 : 0);
+        Long result = db.insert(TABLE_USER, null, values);
         return result != -1;
-
     }
 
     public boolean checkUser(String email, String inputPassword) {
@@ -102,7 +102,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 
     public User getUserByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {COLUMN_EMAIL, COLUMN_PHONE, COLUMN_FIRST_NAME, COLUMN_LAST_NAME, COLUMN_GENDER, COLUMN_PASSWORD};
+        String[] columns = {COLUMN_EMAIL, COLUMN_PHONE, COLUMN_FIRST_NAME, COLUMN_LAST_NAME, COLUMN_GENDER, COLUMN_PASSWORD, COLUMN_IS_ADMIN};
         String selection = COLUMN_EMAIL + " = ?";
         String[] selectionArgs = {email};
 
@@ -115,8 +115,9 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
             @SuppressLint("Range") String lastName = cursor.getString(cursor.getColumnIndex(COLUMN_LAST_NAME));
             @SuppressLint("Range") String gender = cursor.getString(cursor.getColumnIndex(COLUMN_GENDER));
             @SuppressLint("Range") String password = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD));
+            @SuppressLint("Range") boolean isAdmin = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_ADMIN)) == 1;
 
-            User user = new User(userEmail, phone, firstName, lastName, gender, password);
+            User user = new User(userEmail, phone, firstName, lastName, gender, password, isAdmin);
             cursor.close();
             return user;
         }
@@ -126,7 +127,23 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
         }
         return null;
     }
+
+    public boolean isAdmin(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {COLUMN_IS_ADMIN};
+        String selection = COLUMN_EMAIL + " = ?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(TABLE_USER, columns, selection, selectionArgs, null, null, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                @SuppressLint("Range") int isAdmin = cursor.getInt(cursor.getColumnIndex(COLUMN_IS_ADMIN));
+                cursor.close();
+                return isAdmin == 1;
+            }
+            cursor.close();
+        }
+        return false;
+    }
 }
-
-
-

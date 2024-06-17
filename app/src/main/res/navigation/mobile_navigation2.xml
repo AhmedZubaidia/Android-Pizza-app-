@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@+id/nav_home_admin">
+
+    <fragment
+        android:id="@+id/nav_home_admin"
+        android:name="com.example.final_project_1200105.ui_admin.admin.home.HomeFragmentAdmin"
+        android:label="Home"
+        tools:layout="@layout/fragment_home_admin" />
+
+
+    <fragment
+        android:id="@+id/nav_Admin_Profile"
+        android:name="com.example.final_project_1200105.ui_admin.admin.profile.AdminProfileFragment"
+        android:label="Admin Profile"
+        tools:layout="@layout/fragment_admin_profile" />
+
+    <fragment
+        android:id="@+id/nav_Add_Admin"
+        android:name="com.example.final_project_1200105.ui_admin.admin.addadmin.AddAdminFragment"
+        android:label="Add Admin"
+        tools:layout="@layout/fragment_add_admin" />
+
+    <fragment
+        android:id="@+id/nav_View_Orders"
+        android:name="com.example.final_project_1200105.ui_admin.admin.vieworders.ViewOrdersFragment"
+        android:label="View All Orders"
+        tools:layout="@layout/fragment_view_orders" />
+
+    <fragment
+        android:id="@+id/nav_Add_Special_Offers"
+        android:name="com.example.final_project_1200105.ui_admin.admin.addoffers.AddOffersFragment"
+        android:label="Add Special Offers"
+        tools:layout="@layout/fragment_add_offers" />
+
+
+</navigation>

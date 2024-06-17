@@ -11,8 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.final_project_1200105.MainActivity2;
+import com.example.final_project_1200105.ui.Main_frag.MainActivity2;
 import com.example.final_project_1200105.R;
+import com.example.final_project_1200105.ui_admin.admin.home.AdminHomeActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -73,7 +74,13 @@ public class LoginActivity extends AppCompatActivity {
                     editor.apply();
                 }
 
-                Intent intent = new Intent(LoginActivity.this, MainActivity2.class);
+                // Redirect to the appropriate activity based on user type
+                Intent intent;
+                if (dbHelper.isAdmin(email)) {
+                    intent = new Intent(LoginActivity.this, AdminHomeActivity.class);
+                } else {
+                    intent = new Intent(LoginActivity.this, MainActivity2.class);
+                }
                 intent.putExtra("user_email", email); // Pass the email through the intent
                 startActivity(intent);
                 finish();
