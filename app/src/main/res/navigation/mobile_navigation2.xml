@@ -11,7 +11,6 @@
         android:label="Home"
         tools:layout="@layout/fragment_home_admin" />
 
-
     <fragment
         android:id="@+id/nav_Admin_Profile"
         android:name="com.example.final_project_1200105.ui_admin.admin.profile.AdminProfileFragment"
@@ -32,6 +31,9 @@
         <action
             android:id="@+id/action_nav_View_Orders_to_orderDetailsFragment"
             app:destination="@id/orderDetailsFragment" />
+        <action
+            android:id="@+id/action_nav_View_Orders_to_staticsFragment"
+            app:destination="@id/staticsFragment" />
     </fragment>
 
     <fragment
@@ -46,5 +48,10 @@
         android:label="Add Special Offers"
         tools:layout="@layout/fragment_add_offers" />
 
+    <fragment
+        android:id="@+id/staticsFragment"
+        android:name="com.example.final_project_1200105.ui_admin.admin.vieworders.DetailedStatsFragment"
+        android:label="Detailed Statistics"
+        tools:layout="@layout/fragment_detailed_stats" />
 
 </navigation>

@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,18 +20,16 @@ import com.example.final_project_1200105.ui.order.Order;
 import com.example.final_project_1200105.ui.order.OrderAdapter;
 import com.example.final_project_1200105.ui.order.OrdersDatabaseHelper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ViewOrdersFragment extends Fragment {
 
     private static OrdersDatabaseHelper ordersDatabaseHelper;
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
-    private static TextView tvPizzaOrderCounts;
+    private static TextView tvTotalOrders;
     private static TextView tvTotalIncome;
-    private static TextView tvIncomePerPizzaType;
+    private Button btnViewDetailedStats;
 
     @Nullable
     @Override
@@ -39,9 +40,17 @@ public class ViewOrdersFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recyclerViewOrders);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        tvPizzaOrderCounts = rootView.findViewById(R.id.tvPizzaOrderCounts);
+        tvTotalOrders = rootView.findViewById(R.id.tvTotalOrders);
         tvTotalIncome = rootView.findViewById(R.id.tvTotalIncome);
-        tvIncomePerPizzaType = rootView.findViewById(R.id.tvIncomePerPizzaType);
+        btnViewDetailedStats = rootView.findViewById(R.id.btnViewDetailedStats);
+
+        btnViewDetailedStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navController = Navigation.findNavController(v);
+                navController.navigate(R.id.action_nav_View_Orders_to_staticsFragment);
+            }
+        });
 
         loadOrders();
         displayStatistics();
@@ -57,66 +66,21 @@ public class ViewOrdersFragment extends Fragment {
 
     public static void displayStatistics() {
         List<Order> orderList = ordersDatabaseHelper.getAllOrders();
-        Map<String, Integer> pizzaOrderCounts = new HashMap<>();
-        Map<String, Double> pizzaTotalIncome = new HashMap<>();
+        int totalOrders = orderList.size();
         double totalIncome = 0.0;
 
         for (Order order : orderList) {
             String orderDetails = order.getOrderDetails();
             String[] details = orderDetails.split("\n");
-            String category = null;
-            double totalPrice = 0.0;
-
-            // Handle the first category separately
-            for (String detail : details) {
-                if (detail.trim().startsWith("Pizza Category: ")) {
-                    category = detail.replace("Pizza Category: ", "").trim();
-                    pizzaOrderCounts.put(category, pizzaOrderCounts.getOrDefault(category, 0) + 1);
-                    break; // Exit the loop after finding the first category
-                }
-            }
-
-            // Handle the total price separately
             for (String detail : details) {
                 if (detail.trim().startsWith("Total Price: $")) {
-                    totalPrice = Double.parseDouble(detail.replace("Total Price: $", "").trim());
-                    if (category != null) { // Ensure category is not null
-                        pizzaTotalIncome.put(category, pizzaTotalIncome.getOrDefault(category, 0.0) + totalPrice);
-                    }
-                    totalIncome += totalPrice;
-                    break; // Exit the loop after finding the total price
-                }
-            }
-
-            // Handle any additional categories and prices
-            for (String detail : details) {
-                if (detail.trim().startsWith("Pizza Category: ") && !detail.contains(category)) {
-                    category = detail.replace("Pizza Category: ", "").trim();
-                    pizzaOrderCounts.put(category, pizzaOrderCounts.getOrDefault(category, 0) + 1);
-                } else if (detail.trim().startsWith("Total Price: $") && !detail.contains(String.valueOf(totalPrice))) {
-                    totalPrice = Double.parseDouble(detail.replace("Total Price: $", "").trim());
-                    if (category != null) { // Ensure category is not null
-                        pizzaTotalIncome.put(category, pizzaTotalIncome.getOrDefault(category, 0.0) + totalPrice);
-                    }
+                    double totalPrice = Double.parseDouble(detail.replace("Total Price: $", "").trim());
                     totalIncome += totalPrice;
                 }
             }
         }
 
-        StringBuilder orderCountsBuilder = new StringBuilder("Pizza Order Counts:\n");
-        for (Map.Entry<String, Integer> entry : pizzaOrderCounts.entrySet()) {
-            orderCountsBuilder.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
-        }
-
-        StringBuilder incomePerPizzaTypeBuilder = new StringBuilder("Income per Pizza Type:\n");
-        for (Map.Entry<String, Double> entry : pizzaTotalIncome.entrySet()) {
-            incomePerPizzaTypeBuilder.append(entry.getKey()).append(": $").append(String.format("%.2f", entry.getValue())).append("\n");
-        }
-
-        tvPizzaOrderCounts.setText(orderCountsBuilder.toString().trim());
+        tvTotalOrders.setText("Total Orders: " + totalOrders);
         tvTotalIncome.setText("Total Income: $" + String.format("%.2f", totalIncome));
-        tvIncomePerPizzaType.setText(incomePerPizzaTypeBuilder.toString().trim());
     }
-
-
 }
