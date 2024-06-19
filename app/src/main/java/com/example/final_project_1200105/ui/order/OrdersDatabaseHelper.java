@@ -14,6 +14,10 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class OrdersDatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -129,7 +133,6 @@ public class OrdersDatabaseHelper extends SQLiteOpenHelper {
         return result > 0;
     }
 
-
     public List<Order> getAllOrders() {
         List<Order> orderList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_ORDERS;
@@ -163,5 +166,102 @@ public class OrdersDatabaseHelper extends SQLiteOpenHelper {
         return orderList;
     }
 
+    // New methods for calculating orders and income
+    public Map<String, Integer> getPizzaTypeOrderCount() {
+        Map<String, Integer> orderCountMap = new HashMap<>();
+        String selectQuery = "SELECT " + COLUMN_ORDER_DETAILS + " FROM " + TABLE_ORDERS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
 
+        try {
+            cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    @SuppressLint("Range") String orderDetails = cursor.getString(cursor.getColumnIndex(COLUMN_ORDER_DETAILS));
+                    Log.d("OrdersDB", "Order Details: " + orderDetails);  // Debug logging
+
+                    String[] details = orderDetails.split("\n");
+                    for (String detail : details) {
+                        if (detail.trim().startsWith("Pizza Category: ")) {
+                            String category = detail.replace("Pizza Category: ", "").trim();
+                            Log.d("OrdersDB", "Parsed Category: " + category);  // Debug logging
+
+                            orderCountMap.put(category, orderCountMap.getOrDefault(category, 0) + 1);
+                        }
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("OrdersDB", "Error calculating pizza type order count", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return orderCountMap;
+    }
+
+
+    public Map<String, Double> getPizzaTypeTotalIncome() {
+        Map<String, Double> incomeMap = new HashMap<>();
+        String selectQuery = "SELECT " + COLUMN_ORDER_DETAILS + " FROM " + TABLE_ORDERS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    @SuppressLint("Range") String orderDetails = cursor.getString(cursor.getColumnIndex(COLUMN_ORDER_DETAILS));
+                    String[] details = orderDetails.split("\n");
+                    String category = "";
+                    double totalPrice = 0.0;
+                    for (String detail : details) {
+                        if (detail.startsWith("Pizza Category: ")) {
+                            category = detail.replace("Pizza Category: ", "").trim();
+                        } else if (detail.startsWith("Total Price: $")) {
+                            totalPrice = Double.parseDouble(detail.replace("Total Price: $", "").trim());
+                        }
+                    }
+                    incomeMap.put(category, incomeMap.getOrDefault(category, 0.0) + totalPrice);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("OrdersDB", "Error calculating pizza type total income", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return incomeMap;
+    }
+
+    public double getTotalIncome() {
+        double totalIncome = 0.0;
+        String selectQuery = "SELECT " + COLUMN_ORDER_DETAILS + " FROM " + TABLE_ORDERS;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    @SuppressLint("Range") String orderDetails = cursor.getString(cursor.getColumnIndex(COLUMN_ORDER_DETAILS));
+                    String[] details = orderDetails.split("\n");
+                    for (String detail : details) {
+                        if (detail.startsWith("Total Price: $")) {
+                            totalIncome += Double.parseDouble(detail.replace("Total Price: $", "").trim());
+                        }
+                    }
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("OrdersDB", "Error calculating total income", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return totalIncome;
+    }
 }

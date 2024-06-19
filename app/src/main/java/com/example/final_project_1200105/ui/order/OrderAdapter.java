@@ -1,5 +1,7 @@
 package com.example.final_project_1200105.ui.order;
 
+import static com.example.final_project_1200105.ui_admin.admin.vieworders.ViewOrdersFragment.displayStatistics;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -84,6 +86,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, orderList.size());
             Toast.makeText(context, "Order deleted successfully", Toast.LENGTH_SHORT).show();
+            displayStatistics();
         } else {
             Toast.makeText(context, "Failed to delete order", Toast.LENGTH_SHORT).show();
         }

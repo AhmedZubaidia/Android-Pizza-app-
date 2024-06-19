@@ -11,20 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <ImageView
+            android:id="@+id/contact_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/fade_back"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg5"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+
         <TextView
             android:id="@+id/textViewHistory"
-            android:layout_width="352dp"
-            android:layout_height="520dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:background="@color/mediumGray"
+            android:fontFamily="@font/glegoo"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
             android:padding="16dp"
+            android:shadowColor="@color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
             android:text="Welcome to Tweety Store! Our journey began in 2000 with the vision of serving delicious pizzas made with the finest ingredients. Over the years, we have grown to become a favorite spot for pizza lovers, offering a wide variety of pizzas, each crafted with care and passion. Join us and experience the taste of perfection!"
             android:textColor="@color/white"
-            android:textSize="22dp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.344" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
