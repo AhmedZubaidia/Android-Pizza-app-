@@ -1,14 +1,6 @@
-package com.example.final_project_1200105.ui_admin.admin.profile;
+package com.example.final_project_1200105.ui_normal_user.Profile;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +8,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.final_project_1200105.R;
 import com.example.final_project_1200105.start_activites.login_reg.Hash;
 import com.example.final_project_1200105.start_activites.login_reg.User;
 import com.example.final_project_1200105.start_activites.login_reg.UserDatabaseHelper;
 import com.example.final_project_1200105.ui_normal_user.Menu.SharedViewModel;
 
-
-public class AdminProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     private EditText firstNameEditText, lastNameEditText, phoneEditText, passwordEditText;
     private Button changeButton;
@@ -31,19 +28,18 @@ public class AdminProfileFragment extends Fragment {
     private SharedViewModel sharedViewModel;
     private String userEmail;
 
-    @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_admin_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         dbHelper = new UserDatabaseHelper(getContext());
 
-        firstNameEditText = view.findViewById(R.id.profile_firstNameEditText_admin);
-        lastNameEditText = view.findViewById(R.id.profile_lastNameEditText_admin);
-        phoneEditText = view.findViewById(R.id.profile_phoneEditText_admin);
-        passwordEditText = view.findViewById(R.id.profile_passwordEditText_admin);
-        changeButton = view.findViewById(R.id.profile_ChangeButton_admin);
+        firstNameEditText = view.findViewById(R.id.profile_firstNameEditText);
+        lastNameEditText = view.findViewById(R.id.profile_lastNameEditText);
+        phoneEditText = view.findViewById(R.id.profile_phoneEditText);
+        passwordEditText = view.findViewById(R.id.profile_passwordEditText);
+        changeButton = view.findViewById(R.id.profile_ChangeButton);
 
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -73,7 +69,7 @@ public class AdminProfileFragment extends Fragment {
                 firstNameEditText.setText(user.getFirstName());
                 lastNameEditText.setText(user.getLastName());
                 phoneEditText.setText(user.getPhoneNumber());
-                // passwordEditText.setText(user.getPassword());
+               // passwordEditText.setText(user.getPassword());
             } else {
                 Toast.makeText(getContext(), "Failed to load user information.", Toast.LENGTH_SHORT).show();
             }

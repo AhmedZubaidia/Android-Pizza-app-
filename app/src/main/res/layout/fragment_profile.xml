@@ -5,7 +5,7 @@
     android:id="@+id/profile_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Profile.ProfileFragment">
+    tools:context=".ui_normal_user.Profile.ProfileFragment">
 
     <ImageView
         android:id="@+id/profile_imageView"

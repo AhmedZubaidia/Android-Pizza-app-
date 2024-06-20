@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.ui.order.Order;
-import com.example.final_project_1200105.ui.order.OrderAdapter;
-import com.example.final_project_1200105.ui.order.OrdersDatabaseHelper;
+import com.example.final_project_1200105.ui_normal_user.order.Order;
+import com.example.final_project_1200105.ui_normal_user.order.OrderAdapter;
+import com.example.final_project_1200105.ui_normal_user.order.OrdersDatabaseHelper;
 
 import java.util.List;
 

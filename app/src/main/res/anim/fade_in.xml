@@ -4,17 +4,8 @@
 
     <!-- Fade in animation -->
     <alpha
-        android:fromAlpha="0.0"
-        android:toAlpha="0.4"
-        android:duration="4000" />
+        android:fromAlpha="0.3"
+        android:toAlpha="1.0"
+        android:duration="1000" />
 
-    <!-- Scale animation -->
-    <scale
-        android:fromXScale="0.5"
-        android:toXScale="1.0"
-        android:fromYScale="0.5"
-        android:toYScale="1.0"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:duration="4000" />
 </set>

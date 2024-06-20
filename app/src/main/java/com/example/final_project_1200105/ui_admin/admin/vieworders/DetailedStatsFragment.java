@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.ui.order.Order;
-import com.example.final_project_1200105.ui.order.OrdersDatabaseHelper;
+import com.example.final_project_1200105.ui_normal_user.order.Order;
+import com.example.final_project_1200105.ui_normal_user.order.OrdersDatabaseHelper;
 
 import java.util.HashMap;
 import java.util.List;

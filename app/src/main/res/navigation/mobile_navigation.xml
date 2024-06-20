@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.final_project_1200105.ui.home.HomeFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_Menu"
-        android:name="com.example.final_project_1200105.ui.Menu.PizzaMenuFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.Menu.PizzaMenuFragment"
         android:label="Pizza menu"
         tools:layout="@layout/menu_fragment">
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/nav_favourite"
-        android:name="com.example.final_project_1200105.ui.favourite.FavoritesFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.favourite.FavoritesFragment"
         android:label="Favourite"
         tools:layout="@layout/favorites_fragment">
         <action
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/nav_my_orders"
-        android:name="com.example.final_project_1200105.ui.order.OrdersFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.order.OrdersFragment"
         android:label="My Orders"
         tools:layout="@layout/fragment_my_orders">
         <action
@@ -43,32 +43,32 @@
 
     <fragment
         android:id="@+id/pizzaDetailsFragment"
-        android:name="com.example.final_project_1200105.ui.Menu.PizzaDetailsFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.Menu.PizzaDetailsFragment"
         android:label="Pizza Details"
         tools:layout="@layout/fragment_pizza_details" />
 
     <fragment
         android:id="@+id/orderDetailsFragment"
-        android:name="com.example.final_project_1200105.ui.order.OrderDetailsFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.order.OrderDetailsFragment"
         android:label="Order Details"
         tools:layout="@layout/order_details" />
 
 
     <fragment
         android:id="@+id/nav_Profile"
-        android:name="com.example.final_project_1200105.ui.Profile.ProfileFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.Profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
         android:id="@+id/nav_Contact_Us"
-        android:name="com.example.final_project_1200105.ui.ContactUs.ContactUsFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.ContactUs.ContactUsFragment"
         android:label="Contact Us"
         tools:layout="@layout/fragment_contact_us" />
 
     <fragment
         android:id="@+id/nav_Special_Offers"
-        android:name="com.example.final_project_1200105.ui.SpecialOffers.SpecialOffersFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.SpecialOffers.SpecialOffersFragment"
         android:label="Special Offers"
         tools:layout="@layout/fragment_special_offers" >
         <action

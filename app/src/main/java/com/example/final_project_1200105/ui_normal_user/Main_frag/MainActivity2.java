@@ -1,4 +1,4 @@
-package com.example.final_project_1200105.ui_admin.admin.home;
+package com.example.final_project_1200105.ui_normal_user.Main_frag;
 
 import android.Manifest;
 import android.content.Intent;
@@ -40,7 +40,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class AdminHomeActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 101;
@@ -54,20 +54,20 @@ public class AdminHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_home);
+        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout_admin);
-        NavigationView navigationView = findViewById(R.id.nav_view_admin);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_Admin_Profile, R.id.nav_Add_Admin, R.id.nav_View_Orders, R.id.nav_Add_Special_Offers, R.id.nav_Logout, R.id.nav_home_admin)
+                R.id.nav_home, R.id.nav_Menu, R.id.nav_favourite, R.id.nav_my_orders, R.id.nav_Special_Offers, R.id.nav_Profile, R.id.nav_Contact_Us, R.id.nav_Logout)
                 .setOpenableLayout(drawer)
                 .build();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_admin_home);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
@@ -116,7 +116,7 @@ public class AdminHomeActivity extends AppCompatActivity {
     }
 
     private boolean checkPermission() {
-        int result = ContextCompat.checkSelfPermission(AdminHomeActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        int result = ContextCompat.checkSelfPermission(MainActivity2.this, Manifest.permission.READ_EXTERNAL_STORAGE);
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
@@ -204,7 +204,7 @@ public class AdminHomeActivity extends AppCompatActivity {
         sharedViewModel.setUserEmail(null); // or any other method to clear the user session
 
         // Redirect to the login page
-        Intent intent = new Intent(AdminHomeActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainActivity2.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
@@ -219,7 +219,7 @@ public class AdminHomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_admin_home);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }

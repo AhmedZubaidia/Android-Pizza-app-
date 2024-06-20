@@ -15,8 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.ui.Menu.Pizza;
-import com.example.final_project_1200105.ui.Menu.PizzaDatabaseHelper;
+import com.example.final_project_1200105.ui_normal_user.Menu.Pizza;
+import com.example.final_project_1200105.ui_normal_user.Menu.PizzaDatabaseHelper;
 
 import java.util.List;
 

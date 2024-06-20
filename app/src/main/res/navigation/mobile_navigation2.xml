@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/orderDetailsFragment"
-        android:name="com.example.final_project_1200105.ui.order.OrderDetailsFragment"
+        android:name="com.example.final_project_1200105.ui_normal_user.order.OrderDetailsFragment"
         android:label="Order Details"
         tools:layout="@layout/order_details" />
 

@@ -1,64 +1,65 @@
-package com.example.final_project_1200105.ui_admin.admin.addadmin;
-
+package com.example.final_project_1200105.start_activites.login_reg;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.final_project_1200105.R;
-import com.example.final_project_1200105.start_activites.login_reg.Hash;
-import com.example.final_project_1200105.start_activites.login_reg.User;
-import com.example.final_project_1200105.start_activites.login_reg.UserDatabaseHelper;
 
-public class AddAdminFragment extends Fragment {
+public class RegistrationActivity extends AppCompatActivity {
 
     private EditText emailEditText, phoneEditText, firstNameEditText, lastNameEditText, passwordEditText, confirmPasswordEditText;
     private Spinner genderSpinner;
-    private Button addAdminButton;
+    private Button signUpButton;
+    private TextView btnGoSignIn;
     private UserDatabaseHelper dbHelper;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_admin, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration);
 
-        dbHelper = new UserDatabaseHelper(getActivity());
+        dbHelper = new UserDatabaseHelper(this);
 
-        emailEditText = rootView.findViewById(R.id.RegEditText2_admin);
-        phoneEditText = rootView.findViewById(R.id.phoneEditText_admin);
-        firstNameEditText = rootView.findViewById(R.id.firstNameEditText_admin);
-        lastNameEditText = rootView.findViewById(R.id.lastNameEditText_admin);
-        genderSpinner = rootView.findViewById(R.id.genderSpinner);
-        passwordEditText = rootView.findViewById(R.id.passwordEditText_admin);
-        confirmPasswordEditText = rootView.findViewById(R.id.confirmPasswordEditText_admin);
-        addAdminButton = rootView.findViewById(R.id.AddButton_admin);
+        emailEditText = findViewById(R.id.RegEditText2);
+        phoneEditText = findViewById(R.id.phoneEditText);
+        firstNameEditText = findViewById(R.id.firstNameEditText);
+        lastNameEditText = findViewById(R.id.lastNameEditText);
+        genderSpinner = findViewById(R.id.genderSpinner);
+        passwordEditText = findViewById(R.id.passwordEditText);
+        confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
+        signUpButton = findViewById(R.id.RegButton);
+        btnGoSignIn = findViewById(R.id.SignInTextView);
 
         // Set up the spinner with a custom layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.gender_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genderSpinner.setAdapter(adapter);
 
-        addAdminButton.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registerAdmin();
+                registerUser();
             }
         });
 
-        return rootView;
+        btnGoSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void registerAdmin() {
+    private void registerUser() {
         String email = emailEditText.getText().toString().trim();
         String phone = phoneEditText.getText().toString().trim();
         String firstName = firstNameEditText.getText().toString().trim();
@@ -67,20 +68,23 @@ public class AddAdminFragment extends Fragment {
         String password = passwordEditText.getText().toString().trim();
         String confirmPassword = confirmPasswordEditText.getText().toString().trim();
 
-        if (!validateInput(email, phone, firstName, lastName, password, confirmPassword, gender)) {
+        if (!validateInput(email, phone, firstName, lastName, password, confirmPassword , gender)) {
             return;
         }
 
         // Encrypt the password
         String encryptedPassword = Hash.hashPassword(password);
+        Log.d("REG_DEBUG", "Email: " + email + ", Hashed Password: " + encryptedPassword);
 
         // Create a new user and insert into the database
-        User user = new User(email, phone, firstName, lastName, gender, encryptedPassword, true); // true for admin
+        User user = new User(email, phone, firstName, lastName, gender, encryptedPassword, false);
         boolean isInserted = dbHelper.insertUser(user);
 
         if (isInserted) {
-            Toast.makeText(getActivity(), "Admin added successfully!", Toast.LENGTH_SHORT).show();
-            clearFields();
+            Toast.makeText(this, "Registration successful! Please log in.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             emailEditText.setError("Email already exists");
         }
@@ -102,31 +106,33 @@ public class AddAdminFragment extends Fragment {
             }
 
         } catch (IllegalArgumentException e) {
+
             if (e.getMessage().contains("Invalid gender")) {
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-            } else if (e.getMessage().contains("email")) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            else if (e.getMessage().contains("email")) {
+
                 emailEditText.setError(e.getMessage());
+
             } else if (e.getMessage().contains("phone number")) {
+
                 phoneEditText.setError(e.getMessage());
+
             } else if (e.getMessage().contains("First name")) {
+
                 firstNameEditText.setError(e.getMessage());
+
             } else if (e.getMessage().contains("Last name")) {
+
                 lastNameEditText.setError(e.getMessage());
+
             } else if (e.getMessage().contains("Password")) {
+
                 passwordEditText.setError(e.getMessage());
             }
             return false;
         }
-        return true;
-    }
 
-    private void clearFields() {
-        emailEditText.setText("");
-        phoneEditText.setText("");
-        firstNameEditText.setText("");
-        lastNameEditText.setText("");
-        passwordEditText.setText("");
-        confirmPasswordEditText.setText("");
-        genderSpinner.setSelection(0);
+        return true;
     }
 }
