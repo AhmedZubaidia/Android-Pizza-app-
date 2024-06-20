@@ -3,10 +3,14 @@ package com.example.final_project_1200105.activites.lets_start;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.final_project_1200105.ui.Menu.Pizza;
+import com.example.final_project_1200105.ui.Menu.PizzaDatabaseHelper;
 
 import java.util.List;
 
-public class ConnectionAsyncTask extends AsyncTask<String, Void, List<String>> {
+public class ConnectionAsyncTask extends AsyncTask<String, Void, List<Pizza>> {
     private static final String TAG = "ConnectionAsyncTask";
     private Activity activity;
 
@@ -21,11 +25,11 @@ public class ConnectionAsyncTask extends AsyncTask<String, Void, List<String>> {
     }
 
     @Override
-    protected List<String> doInBackground(String... params) {
+    protected List<Pizza> doInBackground(String... params) {
         try {
             String data = HttpManager.getData(params[0]);
             if (data != null) {
-                return PizzaJsonParser.getObjectFromJson(data);
+                return PizzaJsonParser.getPizzasFromJson(data);
             }
         } catch (Exception e) {
             Log.e(TAG, "Error fetching data", e);
@@ -34,12 +38,18 @@ public class ConnectionAsyncTask extends AsyncTask<String, Void, List<String>> {
     }
 
     @Override
-    protected void onPostExecute(List<String> pizzaTypes) {
+    protected void onPostExecute(List<Pizza> pizzaList) {
         ((MainActivity) activity).setProgress(false);
         ((MainActivity) activity).setButtonText("Get Started");
 
-        if (pizzaTypes != null) {
-            ((MainActivity) activity).goToLoginRegistration(pizzaTypes);
+        if (pizzaList != null) {
+            PizzaDatabaseHelper pizzaDatabaseHelper = new PizzaDatabaseHelper(activity);
+            for (Pizza pizza : pizzaList) {
+                pizzaDatabaseHelper.insertPizza(pizza);
+            }
+            pizzaDatabaseHelper.deletePizzasNotInList(pizzaList);
+            Toast.makeText(activity, "Pizzas inserted successfully", Toast.LENGTH_SHORT).show();
+            ((MainActivity) activity).goToWelcomeActivity();
         } else {
             ((MainActivity) activity).showError();
         }

@@ -12,6 +12,18 @@
         <item>Female</item>
     </string-array>
 
+    <string-array name="size_array_add_offer">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </string-array>
+
+    <string-array name="category_array_offer">
+        <item>Chicken</item>
+        <item>Beef</item>
+        <item>Veggies</item>
+    </string-array>
+
 
     <string-array name="category_array">
         <item>All</item>
@@ -27,6 +39,8 @@
         <item>Medium</item>
         <item>Large</item>
     </string-array>
+
+
 
 
     <string name="title_activity_main2">MainActivity2</string>

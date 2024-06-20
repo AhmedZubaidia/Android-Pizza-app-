@@ -10,13 +10,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PizzaDatabaseHelper extends SQLiteOpenHelper {
 
     Context context;
     private static final int DATABASE_VERSION = 2;
-    private static final String DATABASE_NAME = "PizzaDatabase.db";
+    private static final String DATABASE_NAME = "Pizza_new_Database.db";
     private static final String TABLE_PIZZA = "PIZZAS";
     private static final String COLUMN_ID = "ID";
     private static final String COLUMN_NAME = "NAME";
@@ -57,6 +59,11 @@ public class PizzaDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertPizza(Pizza pizza) {
+        if (getPizzaByNameCategorySize(pizza.getName(), pizza.getCategory(), pizza.getSize()) != null) {
+            // Pizza already exists in the database
+            return false;
+        }
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, pizza.getName());
@@ -135,9 +142,24 @@ public class PizzaDatabaseHelper extends SQLiteOpenHelper {
         return result > 0;
     }
 
-    public boolean deletePizza(String name) {
+    public boolean deletePizza(String name, String category, String size) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete(TABLE_PIZZA, COLUMN_NAME + " = ?", new String[]{name});
+        int result = db.delete(TABLE_PIZZA, COLUMN_NAME + " = ? AND " + COLUMN_CATEGORY + " = ? AND " + COLUMN_SIZE + " = ?", new String[]{name, category, size});
         return result > 0;
+    }
+
+    public void deletePizzasNotInList(List<Pizza> pizzas) {
+        Set<String> pizzaIdentifiers = new HashSet<>();
+        for (Pizza pizza : pizzas) {
+            pizzaIdentifiers.add(pizza.getName() + "-" + pizza.getCategory() + "-" + pizza.getSize());
+        }
+
+        List<Pizza> allPizzas = getAllPizzas();
+        for (Pizza pizza : allPizzas) {
+            String identifier = pizza.getName() + "-" + pizza.getCategory() + "-" + pizza.getSize();
+            if (!pizza.isSpecialOffer() && !pizzaIdentifiers.contains(identifier)) {
+                deletePizza(pizza.getName(), pizza.getCategory(), pizza.getSize());
+            }
+        }
     }
 }

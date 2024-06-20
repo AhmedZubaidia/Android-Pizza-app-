@@ -1,5 +1,7 @@
 package com.example.final_project_1200105.activites.lets_start;
 
+import com.example.final_project_1200105.ui.Menu.Pizza;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,19 +10,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PizzaJsonParser {
-    public static List<String> getObjectFromJson(String json) {
-        List<String> pizzaTypes;
+
+    public static List<Pizza> getPizzasFromJson(String json) {
+        List<Pizza> pizzaList = new ArrayList<>();
         try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray jsonArray = jsonObject.getJSONArray("types");
-            pizzaTypes = new ArrayList<>();
+            JSONArray jsonArray = new JSONArray(json);
             for (int i = 0; i < jsonArray.length(); i++) {
-                pizzaTypes.add(jsonArray.getString(i));
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String name = jsonObject.getString("name");
+                String description = jsonObject.getString("description");
+                double price = jsonObject.getDouble("price");
+                String size = jsonObject.getString("size");
+                String category = jsonObject.getString("category");
+                boolean specialOffer = jsonObject.getBoolean("specialOffer");
+                String offerPeriod = jsonObject.isNull("offerPeriod") ? null : jsonObject.getString("offerPeriod");
+                double offerPrice = jsonObject.getDouble("offerPrice");
+
+                Pizza pizza = new Pizza(name, description, price, size, category, specialOffer, offerPeriod, offerPrice);
+                pizzaList.add(pizza);
             }
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
         }
-        return pizzaTypes;
+        return pizzaList;
     }
 }

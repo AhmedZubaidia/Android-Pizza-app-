@@ -69,7 +69,7 @@ public class AddOffersFragment extends Fragment {
     private void setupCategorySpinner() {
         // Set categories to the spinner from resources
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.category_array, android.R.layout.simple_spinner_item);
+                R.array.category_array_offer, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter);
     }
@@ -77,7 +77,7 @@ public class AddOffersFragment extends Fragment {
     private void setupSizeSpinner() {
         // Set sizes to the spinner from resources
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.size_array, android.R.layout.simple_spinner_item);
+                R.array.size_array_add_offer, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sizeSpinner.setAdapter(adapter);
     }

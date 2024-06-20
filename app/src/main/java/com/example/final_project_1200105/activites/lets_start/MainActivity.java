@@ -11,14 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.final_project_1200105.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
     Button btnGetStarted;
     ProgressBar progressBar;
 
-    private static final String BASE_URL = "https://18fbea62d74a40eab49f72e12163fe6c.api.mockbin.io/";
+    private static final String BASE_URL = "https://mocki.io/v1/ef80b107-1719-4509-abf3-1d472a3f6043";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +55,9 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Failed to load pizza types. Please try again.", Toast.LENGTH_SHORT).show();
     }
 
-    // Method to navigate to LoginActivity with the pizza types
-    public void goToLoginRegistration(List<String> pizzaTypes) {
+    // Method to navigate to WelcomeActivity
+    public void goToWelcomeActivity() {
         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
-        intent.putStringArrayListExtra("pizzaTypes", new ArrayList<>(pizzaTypes));
         startActivity(intent);
     }
 }
