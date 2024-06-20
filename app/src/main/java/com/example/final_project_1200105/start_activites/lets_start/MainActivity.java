@@ -20,8 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_started);  // Make sure this layout has ProgressBar and Button
-
+        setContentView(R.layout.activity_get_started);
         // Initialize Button and ProgressBar
         btnGetStarted = findViewById(R.id.lets_start_button);
         progressBar = findViewById(R.id.progressBar);
