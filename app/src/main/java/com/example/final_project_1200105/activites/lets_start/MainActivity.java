@@ -3,6 +3,8 @@ package com.example.final_project_1200105.activites.lets_start;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Start the async task
                 ConnectionAsyncTask connectionAsyncTask = new ConnectionAsyncTask(MainActivity.this);
                 connectionAsyncTask.execute(BASE_URL);
             }
@@ -57,6 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to navigate to WelcomeActivity
     public void goToWelcomeActivity() {
+        // Load the animation
+        Animation fadeIn = AnimationUtils.loadAnimation(MainActivity.this, R.anim.fade_in);
+
+        // Start the animation on the root view of the activity
+        findViewById(android.R.id.content).startAnimation(fadeIn);
+
+        // Navigate to WelcomeActivity
         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
         startActivity(intent);
     }
