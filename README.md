@@ -1,3 +1,7 @@
+ # Advance Pizza (Android Course Project)
+Supervised by Ayman Hroub.
+
+Developed an Android application for a pizza restaurant, allowing users to order pizza online or through a local database. The application featured user-friendly layouts for login, registration, order management, favorites, special offers, and profile management. An admin section was also created for managing orders and special offers. The project incorporated Android packages, SQLite Database, REST, shared preferences, fragments, and animations to enhance user experience.
 
 
 ![image](https://github.com/AhmedASR5/Android-Pizza-app-/assets/108187203/f828d236-97a6-4331-8dab-942204f1eeeb)
